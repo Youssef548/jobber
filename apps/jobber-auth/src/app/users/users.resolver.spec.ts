@@ -1,18 +1,45 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersResolver } from './users.resolver';
+import { UsersService } from './users.service';
+import { PrismaService } from '../prisma/prisma.service';
 
-describe('UsersResolver', () => {
-  let resolver: UsersResolver;
+describe('UsersService', () => {
+  let service: UsersService;
+  let prismaService: PrismaService;
+
+  const mockPrismaService = {
+    user: {
+      findMany: jest.fn(),
+      findUnique: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+    },
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersResolver],
+      providers: [
+        UsersService,
+        {
+          provide: PrismaService,
+          useValue: mockPrismaService,
+        },
+      ],
     }).compile();
 
-    resolver = module.get<UsersResolver>(UsersResolver);
+    service = module.get<UsersService>(UsersService);
+    prismaService = module.get<PrismaService>(PrismaService);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
-    expect(resolver).toBeDefined();
+    expect(service).toBeDefined();
+  });
+
+  it('should have prismaService defined', () => {
+    expect(prismaService).toBeDefined();
   });
 });

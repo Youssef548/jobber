@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@jobber/nestjs": ["libs/nestjs/src/index.ts"],
-      "@prisma-clients/jobber-auth": ["./node_modules/@prisma-clients/jobber-auth"]
+      "@prisma-clients/jobber-auth": [
+        "./node_modules/@prisma-clients/jobber-auth"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
