@@ -2,6 +2,8 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { CreateUserInput } from './dto/create-user.input';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -9,13 +11,14 @@ export class UsersResolver {
 
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.usersService.createUser(createUserInput)
+    return this.usersService.createUser(createUserInput);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [User], { name: 'users' })
   async getUsers(): Promise<User[]> {
     // return from service, or temporary mock
-    return this.usersService.findAll(); 
+    return this.usersService.findAll();
     // or simply: return []; // works if you haven’t implemented findAll() yet
   }
 }
