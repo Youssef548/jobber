@@ -51,7 +51,7 @@
       "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build", "migrate-prisma"],
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "jobber-auth:build",
         "runBuildTargetDependencies": true
@@ -66,14 +66,16 @@
       }
     },
     "generate-types": {
-      "command": "prisma generate",
+      "executor": "nx:run-commands",
       "options": {
+        "command": "prisma generate",
         "cwd": "apps/jobber-auth"
       }
     },
     "migrate-prisma": {
-      "command": "prisma migrate dev",
+      "executor": "nx:run-commands",
       "options": {
+        "command": "prisma migrate dev",
         "cwd": "apps/jobber-auth"
       }
     },
