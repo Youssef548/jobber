@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
     PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      context: ({ req, res }) => ({ req, res }),
       autoSchemaFile: true,
       sortSchema: true,
     }),
